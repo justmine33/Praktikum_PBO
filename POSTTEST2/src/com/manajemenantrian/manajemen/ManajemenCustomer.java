@@ -2,6 +2,7 @@ package com.manajemenantrian.manajemen;
 import java.util.ArrayList;
 import java.util.Scanner;
 import com.manajemenantrian.model.Customer;
+import com.manajemenantrian.model.User;
 
 public class ManajemenCustomer {
     private ArrayList<Customer> DaftarCustomer = new ArrayList<>();

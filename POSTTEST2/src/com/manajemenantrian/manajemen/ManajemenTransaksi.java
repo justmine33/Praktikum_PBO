@@ -29,11 +29,63 @@ public class ManajemenTransaksi{
     }
 
 
+    // public void tambah_transaksi() {
+    //     System.out.println("\n======== Tambah Transaksi ========");
+
+    //     manajemenCustomer.tampilkan_customer();
+        
+    //     System.out.print("Pilih ID Customer: ");
+    //     int idCustomer = scanner.nextInt();
+    //     scanner.nextLine();
+        
+    //     boolean customerDitemukan = false;
+    //     for (Customer customer : manajemenCustomer.getDaftarCustomer()) {
+    //         if (customer.getId_cust() == idCustomer) {
+    //             customerDitemukan = true;
+    //             break;
+    //         }
+    //     }
+        
+    //     if (!customerDitemukan) {
+    //         System.out.println("ID Customer tidak ditemukan!");
+    //         return;
+    //     }
+
+    //     System.out.print("Kode Transaksi: ");
+    //     int kodePembayaran = scanner.nextInt();
+    //     scanner.nextLine();
+
+    //     for (Transaksi transaksi : DaftarTransaksi) {
+    //         if (transaksi.getKode_transaksi() == kodePembayaran) {
+    //             System.out.println("Kode transaksi telah digunakan!");
+    //             return;
+    //         }
+    //     }
+
+    //     System.out.print("Harga: ");
+    //     double harga = scanner.nextDouble();
+
+    //     System.out.print("Diskon (%): ");
+    //     double diskon = scanner.nextDouble();
+    //     scanner.nextLine();
+
+    //     double hargaAkhir = harga - (harga * diskon / 100);
+
+    //     Transaksi transaksiBaru = new Transaksi(kodePembayaran, idCustomer, harga, diskon, "Pending");
+    //     DaftarTransaksi.add(transaksiBaru);
+    //     System.out.println("Transaksi berhasil ditambahkan.");
+    //     System.out.println("Harga setelah diskon: Rp " + hargaAkhir);
+    // }
+
     public void tambah_transaksi() {
         System.out.println("\n======== Tambah Transaksi ========");
-
-        manajemenCustomer.tampilkan_customer();
         
+        if (manajemenCustomer.getDaftarCustomer().isEmpty()) {
+            System.out.println("Belum ada customer terdaftar. Silakan tambahkan customer terlebih dahulu.");
+            manajemenCustomer.tambah_customer();
+        }
+        
+        manajemenCustomer.tampilkan_customer();
         System.out.print("Pilih ID Customer: ");
         int idCustomer = scanner.nextInt();
         scanner.nextLine();
@@ -50,25 +102,32 @@ public class ManajemenTransaksi{
             System.out.println("ID Customer tidak ditemukan!");
             return;
         }
-
+        
         System.out.print("Kode Transaksi: ");
         int kodePembayaran = scanner.nextInt();
         scanner.nextLine();
-
+        
         for (Transaksi transaksi : DaftarTransaksi) {
             if (transaksi.getKode_transaksi() == kodePembayaran) {
                 System.out.println("Kode transaksi telah digunakan!");
                 return;
             }
         }
-
-        System.out.println("Harga: ");
+        
+        System.out.print("Harga: ");
         double harga = scanner.nextDouble();
+        
+        System.out.print("Diskon (%): ");
+        double diskon = scanner.nextDouble();
         scanner.nextLine();
-
-        Transaksi transaksiBaru = new Transaksi(kodePembayaran, idCustomer, harga, "Pending");
+        
+        Transaksi transaksiBaru = new Transaksi(kodePembayaran, idCustomer, harga, diskon, "Pending");
         DaftarTransaksi.add(transaksiBaru);
+        
+        double hargaAkhir = transaksiBaru.hitungTotal(diskon);
+        
         System.out.println("Transaksi berhasil ditambahkan.");
+        System.out.println("Harga setelah diskon: Rp " + hargaAkhir);
     }
 
 
